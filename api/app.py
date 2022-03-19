@@ -8,8 +8,13 @@ app = Flask(__name__)
 def json_response(wordlist_name, dimensions_input, k_clusters):
 
     labels_list, projected_embedding = eh.PCA(wordlist_name, number_of_components = int(dimensions_input))
-    clusters = eh.k_means_clus(projected_embedding, int(k_clusters))
     color_options = ["#00188f", "#fff100", "#00bcf2", "#ff8c00", "#e81123", "#00b294", "#ec008c", "#009e49", "#68217a", "#bad80a"]
+
+    if k_clusters == "1":
+        clusters = [0] * len(labels_list)
+    else:
+        clusters = eh.k_means_clus(projected_embedding, int(k_clusters))
+        
     c_colors = list(map(lambda x: color_options[x], clusters))
     x_coords = list(projected_embedding[:,0])
     y_coords = list(projected_embedding[:,1])
