@@ -68,7 +68,7 @@ def k_means_clus(wordEmbedding, num_of_clus):
      return KMeans(n_clusters=num_of_clus).fit(wordEmbedding).labels_
                
 
-def PCA(list_name, number_of_components = 2):
+def PCA(list_name):
      embedType, preTrainFile = "glove", "glove.6B.300d"
      vocab, all_wordsVocab = loadDataVocab(embedType, preTrainFile)
 
@@ -92,11 +92,14 @@ def PCA(list_name, number_of_components = 2):
         
      # cumulative_variance_explained = np.cumsum(variance_explained)
 
-     projection_matrix = (eigen_vectors.T[:][:number_of_components]).T
+     projection_matrix = (eigen_vectors.T[:][:3]).T
      projected_words = wordlist_Embedding.dot(projection_matrix)
 
+     variance_explained = []
+     for i in eigen_values:
+          variance_explained.append((i/sum(eigen_values)).real*100)
      #final step: get the projected coords
-     return word_list_vocab, projected_words.real
+     return word_list_vocab, projected_words.real, sum(variance_explained[:3]), sum(variance_explained[:2])
 
 if __name__ == '__main__':
      a1, a2 = PCA("I", 2)
