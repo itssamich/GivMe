@@ -1,8 +1,18 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
+
 
 
 export default function DataSet(){
 
+    const [dataSet, setDataset] = useState([]);
+
+
+    useEffect(() => {
+        fetch('./sampleGraph.json')
+            .then(res => {console.log(res); return res.json()})
+            .then(data=>console.log(data.points))
+            .catch(err => console.log('Error: ' + err))
+    },[])
 
     return(
         <div className='container'>
