@@ -2,6 +2,7 @@ import mxnet as mx
 import gluonnlp as nlp
 import numpy as np
 import os
+from sklearn.cluster import KMeans
 
 # Built with help from: 
 # Principal Component Analysis with NumPy
@@ -62,6 +63,9 @@ def import_word_list(filename, wordVocab, wordEmbedding):
                i = wordVocab.index(word)
                word_list_embedding.append(list(wordEmbedding[i]))
      return word_list, np.array(word_list_embedding, np.float32)
+
+def k_means_clus(wordEmbedding, num_of_clus):
+     return KMeans(n_clusters=num_of_clus).fit(wordEmbedding).labels_
                
 
 def PCA(list_name, number_of_components = 2):
@@ -89,9 +93,10 @@ def PCA(list_name, number_of_components = 2):
      # cumulative_variance_explained = np.cumsum(variance_explained)
 
      projection_matrix = (eigen_vectors.T[:][:number_of_components]).T
+     projected_words = wordlist_Embedding.dot(projection_matrix)
 
      #final step: get the projected coords
-     return word_list_vocab, wordlist_Embedding.dot(projection_matrix)
+     return word_list_vocab, projected_words.real
 
 if __name__ == '__main__':
      a1, a2 = PCA("I", 2)
