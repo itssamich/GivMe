@@ -9,10 +9,10 @@ export default function GraphGen(props){
     const dims = numDim;
 
     if(dims == 2){
-        return <D2Graph/>
+        return <D2Graph />
     }
     if(dims == 3){
-        return <D3Graph/>
+        return <D3Graph />
     }
 
 
