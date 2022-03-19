@@ -2,6 +2,10 @@
 
 # python virtualenv
 *venv
+
+# wordList directory
+Lists
+
 # dependencies
 /node_modules
 /.pnp
