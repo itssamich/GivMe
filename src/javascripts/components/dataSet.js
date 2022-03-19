@@ -15,14 +15,14 @@ export default function DataSet(){
     const [updateChecker, setUpdateChecker] = useState(true);
 
 	useEffect(() => {
-		fetch(`http://10.9.31.106:5000/initial_lists`)
+		fetch(`https://10.9.31.106:5000/initial_lists`)
 			.then(res => {return res.json()})
 			.then(data => setDataList(data))
 	}, [])
 
     useEffect(() => {
         if(updateChecker){
-          fetch(`http://10.9.31.106:5000/${dataName}`)
+          fetch(`https://10.9.31.106:5000/${dataName}`)
           .then(res => {return res.json()})
           .then(data=>{
             setDataSet(data)
