@@ -7,7 +7,7 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 export default function Graph(){
     let {dataSet, setDataSet} = useContext(dataContext)
 
-    console.log(dataSet)
+    //console.log(dataSet)
     const options = {
         theme: 'dark2',
         zoomEnabled: true,
@@ -31,7 +31,7 @@ export default function Graph(){
         data: [{
             type: "scatter",
             dataPoints: dataSet.points,
-
+            markerSize: 15,
             }
         ]
     }
