@@ -1,16 +1,19 @@
 from flask import Flask, jsonify
+import EmbeddingHandler as eh
 
 app = Flask(__name__)
 
-@app.route("/<list_name>/<dimentions>")
-def json_response(list_name, dimentions):
+
+@app.route("/<wordlist_name>/<dimensions_input>")
+def json_response(wordlist_name, dimensions_input):
+
+    labels_list, points_list = eh.PCA(wordlist_name)
+    points_array = list(map(lambda x, y: {"x":float(x[0]),"y":float(x[1]), "toolTipContent":y}, points_list, labels_list))
     response = jsonify(
-        list_name="Test",
-        dimensions=2,
-        number_of_points= 10,
-        points= [[0,1], [1,2], [8, 3.8], [6.2, 6.1], [0.1, 0], [0.2, 0], [0.3, 0], [-4, -2.895784], [-4, 4], [3.98, -6.75]],
-        labels= ["[0,1]", "[1,2]", "[8, 3.8]", "[6.2, 6.1]", "[0.1, 0]", "[0.2, 0]", "[0.3, 0]", "[-4, -2.895784]", "[-4, 4]", "[3.98, -6.75]"]
+        list_name = wordlist_name,
+        dimensions = dimensions_input,
+        number_of_points = len(points_array),
+        points = points_array,
         )
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
-    
