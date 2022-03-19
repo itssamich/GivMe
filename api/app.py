@@ -8,9 +8,9 @@ def json_response(list_name, dimentions):
         list_name="Test",
         dimensions=2,
         number_of_points= 10,
-        points= [[0,1], [1,2], [8, 3.8], [6.2, 6.1], [0.1, 0], [0.2, 0], [0.3, 0], [-4, -2.895784], [-4, 4], [3.98, -6.75]],
-        labels= ["[0,1]", "[1,2]", "[8, 3.8]", "[6.2, 6.1]", "[0.1, 0]", "[0.2, 0]", "[0.3, 0]", "[-4, -2.895784]", "[-4, 4]", "[3.98, -6.75]"]
+        points= [{"x": 0, "y": 1, "toolTipContent": "testWord1"},{"x": 8, "y": 3, "toolTipContent": "testWord2"},{"x": 9, "y": 5, "toolTipContent": "testWord3"}],
         )
+
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
     
