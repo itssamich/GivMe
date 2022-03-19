@@ -1,6 +1,7 @@
+import re
 from flask import Flask, jsonify
 import EmbeddingHandler as eh
-
+import os
 app = Flask(__name__)
 
 
@@ -28,5 +29,11 @@ def json_response(wordlist_name):
         colors = c_colors,
         info_represented = [eigen_values_sum2D, eigen_values_sum3D]
         )
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+
+@app.route("/initial_lists")
+def json_all_lists():
+    response =jsonify([name for name in os.listdir("./Lists")])
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
