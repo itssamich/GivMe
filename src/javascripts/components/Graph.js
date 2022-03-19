@@ -15,7 +15,7 @@ export default function Graph(){
                 name: 'idk',
                 text: dataSet.labels,
                 
-                marker: { size: 12, color: ['red', 'grey', 'yellow'],}
+                marker: { size: 12, color: dataSet.colors,}
             },
 
 
