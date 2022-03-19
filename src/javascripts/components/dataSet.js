@@ -4,12 +4,12 @@ import Graph from './Graph';
 export const dataContext = createContext();
 
 export default function DataSet(){
-
+    const [dataName, setDataName] = useState('I');
     const [dataSet, setDataSet] = useState();
 
 
     useEffect(() => {
-        fetch('http://127.0.0.1:5000/tests/2')
+        fetch('http://127.0.0.1:5000/{dataName}/2')
             .then(res => {return res.json()})
             .then(data=>{
               setDataSet(data)
@@ -22,6 +22,7 @@ export default function DataSet(){
       return <p>Loading Data..</p>
     }
 
+
     return(
       <dataContext.Provider value = {{dataSet, setDataSet}}>
         <div className='container'>
@@ -31,17 +32,17 @@ export default function DataSet(){
                 <Graph />
               </div>
               <div className='col-4 menuCol'>
-                <label htmlFor="wordLists">Word Lists</label>
-                <select name='wordLists' id='wordLists'>
+                <label htmlFor="wordLists">{dataName}</label>
+                <select name='wordLists' id='wordLists' value={dataName} onChange={e=>setDataName(e.target.value)}>
                   <option name='#' defaultValue={true} hidden={true}>---</option>
-                  <option value='test'>Test</option>
+                  <option value='I' defaultValue={true}>I</option>
+                  <option value='adj'>Adjectives</option>
                 </select>
 
                 <label htmlFor='dimensionCount'># of Dimensions</label>
                 <select name='dimensionCount'>
                   <option name='#' defaultValue={true} hidden={true}>#</option>
                   <option value='2'>2</option>
-                  <option value='3'>3</option>
                 </select>
 
                 <button type="button" className="btn btn-dark">Go</button>
