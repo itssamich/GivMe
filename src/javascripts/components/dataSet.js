@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import Graph from './Graph';
 
 export default function DataSet(){
 
@@ -9,10 +10,14 @@ export default function DataSet(){
         fetch('./sampleGraph.json')
             .then(res => {return res.json()})
             .then(data=>{
-              const x = data.points[0]
-              const y = data.points[1]
-              const labels = data.labels
+              var x = []
+              var y = []
 
+              for(var i = 0; i < data.points.length; i++){
+                x.push(data.points[i][0])
+                y.push(data.points[i][1])
+              }
+              const labels = data.labels
               const values = [x, y, labels]
               setDataset(values)
             })
@@ -26,6 +31,9 @@ export default function DataSet(){
         <div className='row'>
           <div className='col-8 graphCol'>
             Graph data
+            <div className='graph container'>
+              <Graph dataSet />
+            </div>
           </div>
           <div className='col-4 menuCol'>
             <label htmlFor="wordLists">Word Lists</label>
