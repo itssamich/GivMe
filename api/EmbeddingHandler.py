@@ -100,8 +100,3 @@ def PCA(list_name):
           variance_explained.append((i/sum(eigen_values)).real*100)
      #final step: get the projected coords
      return word_list_vocab, projected_words.real, sum(variance_explained[:3]), sum(variance_explained[:2])
-
-if __name__ == '__main__':
-     a1, a2 = PCA("I", 2)
-     print(type(a1))
-     print(type(list(a2)))
