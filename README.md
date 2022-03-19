@@ -12,10 +12,10 @@ Now that we've squashed our word points into a space that we can understand, we 
 
 1. use npm to install depenencies listed in the package.json file.
 2. use conda or pip to install python packages:
-    gluonnlp
-    mxnet
-    numpy
-    sklearn
+    gluonnlp,
+    mxnet,
+    numpy,
+    sklearn,
     flask
 3. start webserver from the root directory with "npm start"
 4. start the backend API from the api directory with "flask run"
