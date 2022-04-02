@@ -4,6 +4,8 @@ import { dataContext } from './dataSet';
 var CanvasJS = CanvasJSReact.CanvasJS;
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
+//Depreciated Method for calling a graph
+
 export default function Graph(){
     let {dataSet, setDataSet} = useContext(dataContext)
 
