@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import React, { useContext } from "react";
 import D2Graph from "./2DGraph";
 import D3Graph from "./3DGraph";

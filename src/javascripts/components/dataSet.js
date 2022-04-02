@@ -1,9 +1,8 @@
 import React, {useState, useEffect, createContext} from 'react'
 import GraphGen from './GraphGen';
-import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
-import OptionValue from './OptionValue';
-
+import DataPasser from './DataPasser';
+import { type } from '@testing-library/user-event/dist/type';
 export const dataContext = createContext();
 
 export default function DataSet(){
@@ -14,59 +13,80 @@ export default function DataSet(){
 	const [clusterCount, setClusterCount] = useState(1);
     const [updateChecker, setUpdateChecker] = useState(true);
 
-	useEffect(() => {
-		fetch(`http://localhost:5000/initial_lists`)
-			.then(res => {return res.json()})
-			.then(data => setDataList(data))
-	}, [])
+	const [method, setMethod] = useState('PCA')
 
-    useEffect(() => {
-        if(updateChecker){
-          fetch(`http://localhost:5000/${dataName}`)
-          .then(res => {return res.json()})
-          .then(data=>{
-            setDataSet(data)
+    // useEffect(() => {
+    //     if(updateChecker){
+    //       fetch(`http://192.168.68.106:5000/${dataName}`)
+    //       .then(res => {return res.json()})
+    //       .then(data=>{
+    //         setDataSet(data)
 
-          })
-          .catch(err => console.log('Error: ' + err))
-        }
-        setUpdateChecker(false);
-    },[updateChecker])
+    //       })
+    //       .catch(err => console.log('Error: ' + err))
+    //     }
+    //     setUpdateChecker(false);
+    // }, [updateChecker, dataName])
     
 
-    if(!dataSet){
-      return (
-        <div className='startingScreen'>
-			<img src='./loading.gif' className='rotate'></img>
-		</div>
-        )
-    }
+    // if(!dataSet){
+    //   return (
+    //     <div className='startingScreen'>
+	// 		<img src='./loading.gif' className='rotate' alt='loading'></img>
+	// 	</div>
+    //     )
+    // }
+
+	// useEffect(() => {
+	// 	fetch(`http://192.168.68.106:5000/gettest`)
+	// 	.then(res => {return res.json()})
+	// 	.then(data => {
+	// 		console.log(data)
+	// 	})
+	// })
 
 	var val = clusterCount;
 
+	async function handleSubmit(){
+		let body = []
+		if(method == 'PCA'){
+			body = document.getElementById('PCAInput').value.split(', ');
+		}
+		else{
+			let tempBody = []
+			tempBody = document.getElementById('2MInput1').value.split(', ')
+			body.push(tempBody)
+			tempBody = document.getElementById('2MInput2').value.split(', ')
+			body.push(tempBody)
+		}
+		console.log(JSON.stringify(body))
+
+		const res = await fetch(`http://192.168.68.106:5000/`, {
+			method: 'POST',
+			body: JSON.stringify(body),
+			headers: {
+				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': '*'
+			}
+		})
+		
+	}
+
     return(
-      <dataContext.Provider value = {{dataSet, setDataSet, numDim, clusterCount, dataList}}>
+      <dataContext.Provider value = {{dataSet, setDataSet, numDim, clusterCount, dataList, dataName, method, setMethod}}>
         <div className='bigContainer'>
-			<div className="graph">
+			{/* <div className="graph">
 				<div className="row">
 					<GraphGen />
 				</div>
-			</div>
+			</div> */}
         
 			<div className='menu'>
 				<div className='menuTitle'>
 					<h1>Settings</h1>
 				</div>
-				<div className='words menuItem'>
-				<label htmlFor="wordLists">Name of Word List: </label>
-					<select name='wordLists' id='wordLists' value={dataName} onChange={e=>setDataName(e.target.value)}>
-					<option name='#' defaultValue={true} hidden={true}>---</option>
-					{dataList.map((d, i) => {
-						return <OptionValue key={i+1} index={i+1} />
-					})}
-					</select>
-				</div>
-				<div className='dimension menuItem'>
+				<DataPasser /> 
+				{/* <div className='dimension menuItem'>
 				<label htmlFor='dimensionCount'># of Dimensions: </label>
 					<select name='dimensionCount' value={numDim} onChange={e=>setNumDim(e.target.value)}>
 					<option name='#' defaultValue={true} hidden={true}>#</option>
@@ -77,12 +97,12 @@ export default function DataSet(){
 				<div className='cluster menuItem'>
 					<label htmlFor='kClusterCount'>Cluster Count: {val}</label>
 					<Slider onChange={e=>setClusterCount(e.target.value)} valueLabelDisplay="auto" defaultValue={1} step={1} marks min={1} max={5} width={'100%'}/>
-				</div>
-				<button type="button" className="btn btn-dark" onClick={e=>{setClusterCount(val); setUpdateChecker(true)}}>Change List</button>
+				</div> */}
+				<button type="button" className="btn btn-dark" onClick={e=>{handleSubmit()}}>Run</button>
 			
-				<div className='coveragePercentage'>
+				{/* <div className='coveragePercentage'>
 					<h2>% of information currently visible: <br/>{dataSet.info_represented[numDim-2].toFixed(2)}%</h2>
-				</div>
+				</div> */}
 			</div>
 		</div>
 		<div className='context'>
