@@ -47,21 +47,23 @@ export default function DataSet(){
 
 	var val = clusterCount;
 
-	async function handleSubmit(){
-		let body = []
+	function handleSubmit(){
+		let body = [method]
+		let tempBody = []
 		if(method == 'PCA'){
-			body = document.getElementById('PCAInput').value.split(', ');
+			tempBody = document.getElementById('PCAInput').value.split(/ *, */);
+			body.push(tempBody)
 		}
 		else{
-			let tempBody = []
-			tempBody = document.getElementById('2MInput1').value.split(', ')
+			
+			tempBody = document.getElementById('2MInput1').value.split(/ *, */)
 			body.push(tempBody)
-			tempBody = document.getElementById('2MInput2').value.split(', ')
+			tempBody = document.getElementById('2MInput2').value.split(/ *, */)
 			body.push(tempBody)
 		}
 		console.log(JSON.stringify(body))
 
-		const res = await fetch(`http://192.168.68.106:5000/`, {
+		fetch(`http://192.168.68.106:5000/`, {
 			method: 'POST',
 			body: JSON.stringify(body),
 			headers: {
@@ -69,7 +71,8 @@ export default function DataSet(){
 				'Access-Control-Allow-Origin': '*'
 			}
 		})
-		
+		.then(res => {return res.json()})
+		.then(data => setDataSet(data))
 	}
 
     return(
