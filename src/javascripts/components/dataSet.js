@@ -9,6 +9,7 @@ import DarkModeToggle from "react-dark-mode-toggle";
 import { Checkbox } from '@mui/material';
 import SetItem from './SetItem';
 import reactPlotly from 'react-plotly.js';
+import ListMenu from './ListMenu';
 
 
 export const dataContext = createContext();
@@ -21,43 +22,53 @@ export default function DataSet(){
     const [dataSet, setDataSet] = useState();
 	const [clusterCount, setClusterCount] = useState(1);
     const [isDarkMode, setIsDarkMode] = useState(() => true);
-	const [showList, setShowList] = useState(false)
+
 
 	const [method, setMethod] = useState('PCA')
 
 	var val = clusterCount;
 
-	function handleSubmit(){
+	function handleSubmit(type){
 		let body = [method]
 		let tempBody = []
 		let valid = true;
-		if(method == 'PCA'){
-			tempBody = document.getElementById('PCAInput').value.split(/ *, */); //RegEx to split around any number of spaces before or after a comma
-			if(!inputCleaner(tempBody)){
-				valid = false
+
+		if(type === 0){
+			if(method == 'PCA'){
+				tempBody = document.getElementById('PCAInput').value.split(/ *, */); //RegEx to split around any number of spaces before or after a comma
+				if(!inputCleaner(tempBody)){
+					valid = false
+				}
+				else{
+					body.push(tempBody)
+					document.getElementById('PCAInput').value=""
+				}
 			}
 			else{
-				body.push(tempBody)
-			}
+				
+				tempBody = document.getElementById('2MInput1').value.split(/ *, */)
+				if(!inputCleaner(tempBody)){
+					valid = false
+				}
+				else{
+					body.push(tempBody)
+					document.getElementById('2MInput1').value = ""
+				}
+				tempBody = document.getElementById('2MInput2').value.split(/ *, */)
+				if(!inputCleaner(tempBody)){
+					valid = false
+				}
+				else{
+					body.push(tempBody)
+					document.getElementById('2MInput2').value = ""
+				}
+			}	
 		}
-		else{
+		else if(type === 1){
 			
-			tempBody = document.getElementById('2MInput1').value.split(/ *, */)
-			if(!inputCleaner(tempBody)){
-				valid = false
-			}
-			else{
-				body.push(tempBody)
-			}
-			tempBody = document.getElementById('2MInput2').value.split(/ *, */)
-			if(!inputCleaner(tempBody)){
-				valid = false
-			}
-			else{
-				body.push(tempBody)
-			}
+			body.push(dataSet.labels)
+			console.log(body)
 		}
-		
 
 		if(valid){
 			console.log(JSON.stringify(body))
@@ -92,36 +103,58 @@ export default function DataSet(){
 		return true
 	}
 
-	function refreshGraph(){
+	function deletePoints(val){
+		// let tempData = {...dataSet}
+		
+		// const i = tempData.labels.indexOf(val)
+		// tempData.labels.splice(i, 1)
+		// tempData.x_points.splice(i, 1)
+		// tempData.y_points.splice(i, 1)
+		// tempData.z_points.splice(i, 1)
+		// for(let i = 0; i < tempData.colors.length; i++){
+		// 	tempData.colors[i].splice(i, 1)
+		// }
+		// setDataSet(tempData)
+
+		const i = dataSet.labels.indexOf(val)
+		dataSet.labels.splice(i, 1)
+		dataSet.x_points.splice(i, 1)
+		dataSet.y_points.splice(i, 1)
+		dataSet.z_points.splice(i, 1)
+		for(let i = 0; i < dataSet.colors.length; i++){
+			dataSet.colors[i].splice(i, 1)
+		}
 		
 	}
 
-	console.log(dataSet)
 
     return(
       <dataContext.Provider value = {{dataSet, setDataSet, numDim, clusterCount, dataList, dataName, method, setMethod}}>
 
 
         <div className='bigContainer'>
-			{dataSet && 
+			{dataSet 
+				? 
 				<div className="graph">
 					<div className="row">
 						<GraphGen />
 					</div>
 				</div>
+				: <p></p>
 			}
 			<div className='menu'>
 				<div className='menuTitle'>
 					<h1>Settings</h1>
 				</div>
 				<div className='viewColorShifter'>
+					Toggle Viewing Modes: 
 					<ThemeProvider theme={isDarkMode === false ? lightTheme: darkTheme}>
 						<>
 							<GlobalStyles />
 							<DarkModeToggle 
 									onChange={setIsDarkMode}
 									checked={isDarkMode}
-									size={80}
+									size={50}
 							/>
 						</>
 					</ThemeProvider>
@@ -142,9 +175,9 @@ export default function DataSet(){
 					?	<div className='PCAInformation'>
 						<div className='cluster menuItem'>
 							<label htmlFor='kClusterCount'>Cluster Count: {val}</label>
-							<Slider onChange={e=>setClusterCount(e.target.value)} valueLabelDisplay="auto" defaultValue={1} step={1} marks min={1} max={5} width={'100%'}/>
+							<Slider onChange={e=>setClusterCount(e.target.value)} valueLabelDisplay="auto" defaultValue={1} step={1} marks min={1} max={5} width={'90%'}/>
 						</div>
-						<button type="button" className="btn btn-dark" onClick={e=>{handleSubmit()}}>Run</button>
+						<button type="button" className="btn btn-dark" onClick={e=>{handleSubmit(0)}}>Run</button>
 					
 						<div className='coveragePercentage'>
 							{dataSet 
@@ -153,29 +186,16 @@ export default function DataSet(){
 							}
 						</div>
 					</div>
-					:	<button type="button" className="btn btn-dark" onClick={e=>{handleSubmit()}}>Run</button>
+					:	<button type="button" className="btn btn-dark" onClick={e=>{handleSubmit(0)}}>Run</button>
 
 				}
-				<Checkbox onChange={() => {if(showList){setShowList(false)}else{setShowList(true)}}} />
 			</div>
-			<div className='listMenu'>
-				{dataSet 
-					? showList
-						?   <div className='listWords'>
-								<ul>
-								{
-									dataSet.labels.map((e, i) => {
-										return <SetItem key = {i+1} index = {i+1}/>
-									})
-								}
-								</ul>
-								<button type="button" className="btn btn-dark" onClick={e=>setClusterCount(1)}>Run</button>
-
-							</div>
-						: <p></p>
-					: <p></p>
-				}
-			</div>
+			{dataSet
+                ? 
+                <ListMenu deletePoints={deletePoints} handleSubmit={handleSubmit}/>
+                : <p></p>
+            }
+			
 		</div>
 
 

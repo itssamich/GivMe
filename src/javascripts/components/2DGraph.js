@@ -32,7 +32,7 @@ export default function D2Graph(){
             margin: 0,
             paper_bgcolor: "#000",
             plot_bgcolor: "#363537",
-            outlinecolor: "#fff",
+            outlinecolor: "#212529",
 
 
             xaxis: {

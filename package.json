@@ -1,5 +1,5 @@
 {
-  "name": "words",
+  "name": "GivMe",
   "version": "0.2.0",
   "private": true,
   "dependencies": {
@@ -14,6 +14,7 @@
     "flask": "^0.2.10",
     "plotly.js": "^2.11.1",
     "react": "^17.0.2",
+    "react-bootstrap": "^2.2.3",
     "react-dark-mode-toggle": "^0.2.0",
     "react-dom": "^17.0.2",
     "react-plotly.js": "^2.5.1",
