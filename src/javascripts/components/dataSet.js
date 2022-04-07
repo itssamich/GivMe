@@ -62,7 +62,7 @@ export default function DataSet(){
 		if(valid){
 			console.log(JSON.stringify(body))
 
-			fetch(`http://shunnshine.pythonanywhere.com/`, {
+			fetch(`https://shunnshine.pythonanywhere.com/`, {
 				method: 'POST',
 				body: JSON.stringify(body),
 				headers: {
