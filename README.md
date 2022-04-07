@@ -8,16 +8,3 @@ To accomplish this we've preloaded our app with groupings of similar words. The 
 
 Now that we've squashed our word points into a space that we can understand, we can use our human brains to find patterns, reverse engineer the information in the embeddings, and with some effort develop algorithms to improve the next generation of natural language processing. To guarantee the usefulness of this app we tried to make the user experience as friendly as possible. Our goal was to make this app responsive and intuitive to use, and we are really happy with how it turned out.
 
-### Getting Started
-
-1. use npm to install depenencies listed in the package.json file.
-2. use conda or pip to install python packages:
-    gluonnlp,
-    mxnet,
-    numpy,
-    sklearn,
-    flask
-3. start webserver from the root directory with "npm start"
-4. start the backend API from the api directory with "flask run"
-
-
