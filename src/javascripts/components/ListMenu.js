@@ -55,10 +55,10 @@ export default function ListMenu(props){
 
             </Modal.Body>
             <Modal.Footer>
-            <Button variant="primary" onClick={handleClose}>
+            <Button variant="dark" onClick={handleClose}>
                 Close
             </Button>
-            <button type="button" className="btn btn-dark" onClick={() => {delVal();  handleClose()}}>Update</button>
+            <button type="button" className="btn btn-primary" onClick={() => {delVal();  handleClose()}}>Update</button>
             </Modal.Footer>
         </Modal>
         </>

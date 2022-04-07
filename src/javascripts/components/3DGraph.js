@@ -1,7 +1,7 @@
 import React, {useContext} from "react";
 import { dataContext } from './dataSet';
 import Plot from "react-plotly.js";
-import { flexbox } from "@mui/system";
+import { flexbox, width } from "@mui/system";
 
 export default function D3Graph(){
     let {dataSet, setDataSet, clusterCount, isDarkMode} = useContext(dataContext)
@@ -35,30 +35,29 @@ export default function D3Graph(){
                 }
             ]}
             layout = {{
-                autosize: true,       
+                autosize: 'true',       
                 paper_bgcolor: theme.paperBG,
                 plot_bgcolor: theme.plotBG,
                 outlinecolor: "#212529",
+                uirevision: 'true',
                 scene : {
-                    aspectmode: "manual",
-                    aspectratio:{
-                        x:"1", y: "1", z: "1",
-                    },
+                    aspectmode: "auto",
                     xaxis:{title: '1st Principal Conponent'},
                     yaxis:{title: '2nd Principal Conponent'},
                     zaxis:{title: '3rd Principal Conponent'},
                 }
             }}
             config = {{
-                responsive: true,
                 displaylogo: false
             }}
             useResizeHandler = {true} 
             style = {{
+                border: "5px, solid, white",
                 borderRadius: "30px",
-                margin: "15px",
-                width: "100%", 
+                margin: "5%",
+                width: "55%", 
                 height: "100%"}}
         />
     )
 }
+

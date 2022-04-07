@@ -104,18 +104,6 @@ export default function DataSet(){
 	}
 
 	function deletePoints(val){
-		// let tempData = {...dataSet}
-		
-		// const i = tempData.labels.indexOf(val)
-		// tempData.labels.splice(i, 1)
-		// tempData.x_points.splice(i, 1)
-		// tempData.y_points.splice(i, 1)
-		// tempData.z_points.splice(i, 1)
-		// for(let i = 0; i < tempData.colors.length; i++){
-		// 	tempData.colors[i].splice(i, 1)
-		// }
-		// setDataSet(tempData)
-
 		const i = dataSet.labels.indexOf(val)
 		dataSet.labels.splice(i, 1)
 		dataSet.x_points.splice(i, 1)

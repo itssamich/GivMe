@@ -36,10 +36,10 @@ export default function D2Graph(){
         ]}
         config ={{
             displaylogo: false,
-            responsive: true,
+            responsive: 'true',
         }}
         layout = {{
-            autosize: true,  
+            autosize: 'true',  
             paper_bgcolor: theme.paperBG,
             plot_bgcolor: theme.plotBG,
             outlinecolor: "#212529",
@@ -57,10 +57,11 @@ export default function D2Graph(){
             }
         }}
         useResizeHandler = {true} 
-        style = {{
-            width: "50%", 
-            height: "100%"
-        }}
+            style = {{
+                borderRadius: "30px",
+                margin: "15px",
+                width: "55%", 
+                height: "100%"}}
         />
         
     )
