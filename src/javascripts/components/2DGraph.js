@@ -4,8 +4,21 @@ import Plot from "react-plotly.js";
 
 
 export default function D2Graph(){
-    let {dataSet, setDataSet, clusterCount} = useContext(dataContext)
-    const [theme, setTheme] = useState();
+    let {dataSet, setDataSet, clusterCount, isDarkMode, revNumber} = useContext(dataContext)
+    let theme = {}
+
+    if(isDarkMode){
+        theme = {
+            "paperBG": "#000",
+            "plotBG": "#363537"
+        }
+    }
+    else{
+        theme = {
+            "paperBG": "#fff",
+            "plotBG": '#E2E2E2'
+        }
+    }
 
     return(
         <Plot 
@@ -26,12 +39,9 @@ export default function D2Graph(){
             responsive: true,
         }}
         layout = {{
-            autosize: false,
-            width: "900px",
-            height: "1200px",
-            margin: 0,
-            paper_bgcolor: "#000",
-            plot_bgcolor: "#363537",
+            autosize: true,  
+            paper_bgcolor: theme.paperBG,
+            plot_bgcolor: theme.plotBG,
             outlinecolor: "#212529",
 
 
@@ -46,6 +56,12 @@ export default function D2Graph(){
                 }
             }
         }}
+        useResizeHandler = {true} 
+        style = {{
+            width: "50%", 
+            height: "100%"
+        }}
         />
+        
     )
 }

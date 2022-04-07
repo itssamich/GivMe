@@ -1,42 +1,64 @@
 import React, {useContext} from "react";
 import { dataContext } from './dataSet';
 import Plot from "react-plotly.js";
+import { flexbox } from "@mui/system";
 
 export default function D3Graph(){
-    let {dataSet, setDataSet,clusterCount} = useContext(dataContext)
+    let {dataSet, setDataSet, clusterCount, isDarkMode} = useContext(dataContext)
+    let theme = {}
 
+    if(isDarkMode){
+        theme = {
+            "paperBG": "#000",
+            "plotBG": "#363537"
+        }
+    }
+    else{
+        theme = {
+            "paperBG": "#fff",
+            "plotBG": '#E2E2E2'
+        }
+    }
     return(
         <Plot 
-        data = {[
-            {
-                x: dataSet.x_points,
-                y: dataSet.y_points,
-                z: dataSet.z_points,
+            data = {[
+                {
+                    x: dataSet.x_points,
+                    y: dataSet.y_points,
+                    z: dataSet.z_points,
+                    mode: 'markers',
+                    type: 'scatter3d',
+                    name: 'idk',
+                    text: dataSet.labels,
+                    
+                    marker: { size: 10, color: dataSet.colors[clusterCount-2],}
+                }
+            ]}
+            layout = {{
+                autosize: true,       
+                paper_bgcolor: theme.paperBG,
+                plot_bgcolor: theme.plotBG,
+                outlinecolor: "#212529",
+                scene : {
+                    aspectmode: "manual",
+                    aspectratio:{
+                        x:"1", y: "1", z: "1",
+                    },
+                    xaxis:{title: '1st Principal Conponent'},
+                    yaxis:{title: '2nd Principal Conponent'},
+                    zaxis:{title: '3rd Principal Conponent'},
+                }
+            }}
+            config = {{
                 responsive: true,
-                mode: 'markers',
-                type: 'scatter3d',
-                name: 'idk',
-                text: dataSet.labels,
-                
-                marker: { size: 10, color: dataSet.colors[clusterCount-2],}
-            }
-        ]}
-        layout = {{
-            autosize: false,
-            width: "900px",
-            height: "1200px",
-            margin: 0,
-
-            title: `"${dataSet.list_name}" word list`,
-            scene : {
-                xaxis:{title: '1st Principal Conponent'},
-                yaxis:{title: '2nd Principal Conponent'},
-                zaxis:{title: '3rd Principal Conponent'},
-            }
-        }}
-        config = {{
-            responsive: true,
-            displaylogo: false
-        }}/>
+                displaylogo: false
+            }}
+            useResizeHandler = {true} 
+            style = {{
+                borderRadius: "30px",
+                margin: "15px",
+                width: "100%", 
+                height: "100%"}}
+        />
     )
 }
