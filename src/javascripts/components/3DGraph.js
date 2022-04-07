@@ -52,9 +52,8 @@ export default function D3Graph(){
             }}
             useResizeHandler = {true} 
             style = {{
-                border: "5px, solid, white",
                 borderRadius: "30px",
-                margin: "5%",
+                margin: "15px",
                 width: "55%", 
                 height: "100%"}}
         />

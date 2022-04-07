@@ -1,7 +1,14 @@
+html, body{
+    height: 100%;
+}
 .projectHeading{
     text-align: center;
     position: relative;
     top: 0;
+}
+.footer{
+    height: 50px;
+    margin-top: -50px;
 }
 .mainContent{
     width: 100%;
@@ -22,6 +29,13 @@
         border-radius: 15px;
         text-align: center;
         padding: 30px;
+        .infoBtn{
+            cursor: pointer;
+        }
+        .informationSegment{
+            display: flex;
+            justify-content: flex-start;
+        }
     }
 }
 
@@ -34,7 +48,11 @@
         flex-direction: column;
     }
     .js-plotly-plot{
-        margin-left: 0px;
+        margin: 0px;
         width: 90% !important;
+    }
+    .menu{
+        padding-top: 5px;
+        margin-top: 85px;
     }
 }
