@@ -4,8 +4,16 @@ import Plot from "react-plotly.js";
 
 
 export default function D2Graph(){
-    let {dataSet, setDataSet, clusterCount, isDarkMode, revNumber} = useContext(dataContext)
+    let {dataSet, setDataSet, clusterCount, isDarkMode, method} = useContext(dataContext)
     let theme = {}
+    let colors = []
+
+    if(method == "2M"){
+        colors = dataSet.colors
+    }
+    else{
+        colors = dataSet.colors[clusterCount-2]
+    }
 
     if(isDarkMode){
         theme = {
@@ -31,7 +39,7 @@ export default function D2Graph(){
                 name: 'idk',
                 text: dataSet.labels,
                 
-                marker: { size: 12, color: dataSet.colors[clusterCount-2], symbol: 'circle',}
+                marker: { size: 12, color: colors, symbol: 'circle',}
             }
         ]}
         config ={{
