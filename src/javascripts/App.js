@@ -1,4 +1,4 @@
-import '../styles/App.scss';
+//import '../styles/App.scss';
 import DataSet from './components/dataSet'
 
 function App() {

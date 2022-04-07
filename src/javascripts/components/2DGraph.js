@@ -1,10 +1,11 @@
-import React, {useContext} from "react";
+import React, {useContext, useState} from "react";
 import { dataContext } from './dataSet';
 import Plot from "react-plotly.js";
 
 
 export default function D2Graph(){
     let {dataSet, setDataSet, clusterCount} = useContext(dataContext)
+    const [theme, setTheme] = useState();
 
     return(
         <Plot 
@@ -17,7 +18,7 @@ export default function D2Graph(){
                 name: 'idk',
                 text: dataSet.labels,
                 
-                marker: { size: 12, color: dataSet.colors[clusterCount-2],}
+                marker: { size: 12, color: dataSet.colors[clusterCount-2], symbol: 'circle',}
             }
         ]}
         config ={{
@@ -29,8 +30,10 @@ export default function D2Graph(){
             width: "900px",
             height: "1200px",
             margin: 0,
+            paper_bgcolor: "#000",
+            plot_bgcolor: "#363537",
+            outlinecolor: "#fff",
 
-            title: `"${dataSet.list_name}" word list`,
 
             xaxis: {
                 title: {
